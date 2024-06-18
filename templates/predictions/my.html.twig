@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MyPredictionController!{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>My predictions</h1>
+
+    <form action="{{ path('app_my_predictions_store') }}" method="post">
+    <table class="table bordered small">
+        <thead>
+        <tr>
+            <th>Match</th>
+            <th>Predictions</th>
+        </tr>
+        </thead>
+        {% for event in events %}
+            <tr class="{{ (predictions[event.id] is defined) ? predictionClass(predictions[event.id].points) : '' }}">
+                <td>
+                    <small>{{ event.matchDate.format('d.m.Y H:i') }}</small><br/>
+                    {{ event.hostTeam }} {{ (event.hostTeamScores is not null and event.guestTeamScores is not null) ? "#{event.hostTeamScores} : #{event.guestTeamScores}" : ':' }} {{ event.guestTeam }}
+                </td>
+                <td>
+                    <input
+                        {{ (not event.isPredictable) ? 'disabled' : '' }}
+                        type="text"
+                        name="predictions[{{ event.id }}][hostTeamScores]"
+                        value="{{ (predictions[event.id] is defined) ? predictions[event.id].hostTeamScores : '' }}"
+                    />
+                    :
+                    <input
+                        {{ (not event.isPredictable) ? 'disabled' : '' }}
+                        type="text"
+                        name="predictions[{{ event.id }}][guestTeamScores]"
+                        value="{{ (predictions[event.id] is defined) ? predictions[event.id].guestTeamScores : '' }}"
+                    />
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

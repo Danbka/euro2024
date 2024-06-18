@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Predictions{% endblock %}
+
+{% block body %}
+    <h1>Create many Predictions</h1>
+
+    <form method="post" action="">
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            {% for event in events %}
+                <th>
+                    {{ event.title }}
+                </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                {% for event in events %}
+                    <th>
+                        <input class="w-25" type="text" name="predictions[{{ user.id }}][{{ event.id }}][hostTeamScores]" />:<input class="w-25" type="text" name="predictions[{{ user.id }}][{{ event.id }}][guestTeamScores]" />
+                    </th>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+        <button type="submit" value="Submit">Submit</button>
+    </form>
+
+    <a href="{{ path('app_prediction_index') }}">back to list</a>
+{% endblock %}

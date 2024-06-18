@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prediction{% endblock %}
+
+{% block body %}
+    <h1>Prediction</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ prediction.id }}</td>
+            </tr>
+            <tr>
+                <th>HostTeamScores</th>
+                <td>{{ prediction.hostTeamScores }}</td>
+            </tr>
+            <tr>
+                <th>GuestTeamScores</th>
+                <td>{{ prediction.guestTeamScores }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_prediction_index') }}">back to list</a>
+
+    <a href="{{ path('app_prediction_edit', {'id': prediction.id}) }}">edit</a>
+
+    {{ include('prediction/_delete_form.html.twig') }}
+{% endblock %}

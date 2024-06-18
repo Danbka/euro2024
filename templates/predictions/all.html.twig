@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello OverviewController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for event in events %}
+            {% if loop.index0 % 4 == 0 %}
+                <div class="row">
+            {% endif %}
+            <div class="col">
+                <table class="table table-sm bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="3">
+                                {{ event.title }}
+                                {{ event.hostTeamScores is not null and event.guestTeamScores is not null ? "#{event.hostTeamScores}:#{event.guestTeamScores}" : '' }}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th><small>{{ event.matchDate.format('d.m.Y H:i') }}</small></th>
+                            <th colspan="2"><small>Predictions</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        {% set prediction = user.prediction(event.id) %}
+                        <tr class="{{ (prediction is not null) ? predictionClass(prediction.points) : '' }}">
+                            <td>{{ user.email }}</td>
+                            <td>{{ (prediction is not null) ? prediction.hostTeamScores : '' }}</td>
+                            <td>{{ (prediction is not null) ? prediction.guestTeamScores : '' }}</td>
+                        </tr>
+                    {%  endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if loop.index0 % 4 == 3 %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

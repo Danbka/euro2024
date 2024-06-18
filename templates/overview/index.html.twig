@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Overview{% endblock %}
+
+{% block body %}
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Points</th>
+        </tr>
+        </thead>
+    {% for user in users %}
+        <tr>
+            <td>{{ user['user'].email }}</td>
+            <td>{{ user['points'] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
